@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Avocaloraa | Galerie</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header>
+    <div class="nav-container">
+      <a href="index.html" class="brand">
+        <img src="logo.svg" alt="Avocaloraa Logo" />
+        <span>Avocaloraa</span>
+      </a>
+      <nav>
+        <ul>
+          <li><a href="index.html">Startseite</a></li>
+          <li><a href="info.html">Information</a></li>
+          <li><a href="gallery.html" class="active">Galerie</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <h2 class="section-title">Galerie &amp; Highlights</h2>
+    <p style="color: var(--text-muted); margin-bottom: 1.5rem;">
+      Ein kleiner Einblick in Artworks, Stream-Momente und Designs rund um Avocaloraa. Klicke auf eine Karte für Details!
+    </p>
+
+    <div class="filter-bar">
+      <button class="filter-btn active" data-filter="all">Alle</button>
+      <button class="filter-btn" data-filter="art">Pixel Art &amp; Branding</button>
+      <button class="filter-btn" data-filter="stream">Stream Momente</button>
+      <button class="filter-btn" data-filter="setup">Cozy Setup</button>
+    </div>
+
+    <div class="gallery-grid" id="galleryGrid">
+      <div class="gallery-item" data-category="art" data-title="Avocaloraa Pixel Avatar" data-desc="Das offizielle Pixel-Art Profilbild im gemütlichen Retro-Look.">
+        <div class="gallery-thumb" style="background: #ffffff;">
+          <img src="logo.svg" alt="Pixel Avatar" style="height: 140px; width: 140px;" />
+        </div>
+        <div class="gallery-caption">
+          <h4>Avocaloraa Pixel Avatar</h4>
+          <p>Pixel Art &amp; Branding</p>
+        </div>
+      </div>
+
+      <div class="gallery-item" data-category="art" data-title="Kanal-Banner Design" data-desc="Der charakteristische Avocado-Schriftzug in Türkis und Waldgrün.">
+        <div class="gallery-thumb" style="background: linear-gradient(135deg, #1d3528, #2d8a7e);">
+          🥑
+        </div>
+        <div class="gallery-caption">
+          <h4>Kanal-Banner Design</h4>
+          <p>Pixel Art &amp; Branding</p>
+        </div>
+      </div>
+
+      <div class="gallery-item" data-category="stream" data-title="Erster Meilenstein: 100+ Subs" data-desc="Ein unvergesslicher Abend gemeinsam mit der gesamten Community!">
+        <div class="gallery-thumb" style="background: linear-gradient(135deg, #243b2a, #4d8b5c);">
+          🎉
+        </div>
+        <div class="gallery-caption">
+          <h4>Community Meilenstein</h4>
+          <p>Stream Momente</p>
+        </div>
+      </div>
+
+      <div class="gallery-item" data-category="setup" data-title="Cozy Desk &amp; Lichtstimmung" data-desc="Warmes Licht, Pflanzen und bereit für entspannte Abend-Streams.">
+        <div class="gallery-thumb" style="background: linear-gradient(135deg, #1f2923, #3c5946);">
+          🌿
+        </div>
+        <div class="gallery-caption">
+          <h4>Cozy Stream Setup</h4>
+          <p>Cozy Setup</p>
+        </div>
+      </div>
+
+      <div class="gallery-item" data-category="stream" data-title="Cozy Gaming Marathon" data-desc="Stundenlanges Bauen, Entdecken und Lachen im Livestream.">
+        <div class="gallery-thumb" style="background: linear-gradient(135deg, #2a2438, #4d6b58);">
+          🎮
+        </div>
+        <div class="gallery-caption">
+          <h4>Cozy Gaming Marathon</h4>
+          <p>Stream Momente</p>
+        </div>
+      </div>
+
+      <div class="gallery-item" data-category="art" data-title="Custom Chat Emotes" data-desc="Kleine Avocado- und Reaktions-Emotes für Abonnenten im Chat.">
+        <div class="gallery-thumb" style="background: linear-gradient(135deg, #2b3a2e, #69b578);">
+          ✨
+        </div>
+        <div class="gallery-caption">
+          <h4>Custom Chat Emotes</h4>
+          <p>Pixel Art &amp; Branding</p>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Lightbox Modal -->
+  <div class="modal" id="lightboxModal">
+    <div class="modal-content">
+      <button class="modal-close" id="closeModal">&times;</button>
+      <div id="modalPreview" style="font-size: 4rem; margin-bottom: 1rem;"></div>
+      <h3 id="modalTitle" style="color: var(--accent-lime); margin-bottom: 0.5rem;"></h3>
+      <p id="modalDesc" style="color: var(--text-muted);"></p>
+    </div>
+  </div>
+
+  <footer>
+    <p>&copy; 2026 <span>Avocaloraa</span> (@Avocaloraa) • Galerie &amp; Eindrücke 🥑</p>
+  </footer>
+
+  <script>
+    // Filterfunktion
+    const filterBtns = document.querySelectorAll('.filter-btn');
+    const items = document.querySelectorAll('.gallery-item');
+
+    filterBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        filterBtns.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        const filter = btn.dataset.filter;
+
+        items.forEach(item => {
+          if (filter === 'all' || item.dataset.category === filter) {
+            item.style.display = 'block';
+          } else {
+            item.style.display = 'none';
+          }
+        });
+      });
+    });
+
+    // Lightbox Vorschau
+    const modal = document.getElementById('lightboxModal');
+    const modalTitle = document.getElementById('modalTitle');
+    const modalDesc = document.getElementById('modalDesc');
+    const modalPreview = document.getElementById('modalPreview');
+    const closeModal = document.getElementById('closeModal');
+
+    items.forEach(item => {
+      item.addEventListener('click', () => {
+        modalTitle.textContent = item.dataset.title;
+        modalDesc.textContent = item.dataset.desc;
+        modalPreview.innerHTML = item.querySelector('.gallery-thumb').innerHTML;
+        modal.classList.add('open');
+      });
+    });
+
+    closeModal.addEventListener('click', () => modal.classList.remove('open'));
+    modal.addEventListener('click', (e) => {
+      if (e.target === modal) modal.classList.remove('open');
+    });
+  </script>
+</body>
+</html>
